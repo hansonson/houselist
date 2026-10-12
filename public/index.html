@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HouseList — Sign in</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<main class="auth-page">
+  <h1>HouseList</h1>
+  <p class="tagline">Shared shopping lists for households</p>
+
+  <div class="tabs">
+    <button type="button" id="tab-login" class="tab active">Log in</button>
+    <button type="button" id="tab-register" class="tab">Register</button>
+  </div>
+
+  <form id="login-form" class="card">
+    <label for="login-email">Email</label>
+    <input type="email" id="login-email" required autocomplete="email" />
+    <label for="login-password">Password</label>
+    <input type="password" id="login-password" required autocomplete="current-password" />
+    <button type="submit">Log in</button>
+    <p class="error" id="login-error"></p>
+  </form>
+
+  <form id="register-form" class="card hidden">
+    <label for="register-name">Name</label>
+    <input type="text" id="register-name" required autocomplete="name" />
+    <label for="register-email">Email</label>
+    <input type="email" id="register-email" required autocomplete="email" />
+    <label for="register-password">Password (min. 8 characters)</label>
+    <input type="password" id="register-password" required minlength="8" autocomplete="new-password" />
+    <button type="submit">Create account</button>
+    <p class="error" id="register-error"></p>
+  </form>
+</main>
+<script src="js/api.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>

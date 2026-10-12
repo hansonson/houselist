@@ -1,0 +1,20 @@
+{
+  "name": "houselist",
+  "version": "1.0.0",
+  "description": "Shared household shopping lists",
+  "main": "server/index.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node --test"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "bcryptjs": "^2.4.3"
+  }
+}

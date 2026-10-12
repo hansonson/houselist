@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HouseList</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<header class="app-header">
+  <h1>HouseList</h1>
+  <div class="header-controls">
+    <select id="household-select" aria-label="Active household"></select>
+    <button type="button" id="btn-new-household">+ Household</button>
+    <span id="current-user"></span>
+    <button type="button" id="btn-logout">Log out</button>
+  </div>
+</header>
+
+<main class="app-main">
+  <p class="error" id="global-error"></p>
+
+  <section id="no-household" class="card hidden">
+    <h2>Get started</h2>
+    <div class="side-by-side">
+      <form id="create-household-form">
+        <h3>Create a household</h3>
+        <label for="new-household-name">Household name</label>
+        <input type="text" id="new-household-name" required />
+        <button type="submit">Create</button>
+      </form>
+      <form id="join-household-form">
+        <h3>Join a household</h3>
+        <label for="join-code-input">Join code</label>
+        <input type="text" id="join-code-input" required />
+        <button type="submit">Join</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="household-view" class="hidden">
+    <div class="columns">
+      <div class="column lists-column">
+        <h2>Shopping lists</h2>
+        <form id="create-list-form" class="inline-form">
+          <input type="text" id="new-list-title" placeholder="New list title" required />
+          <button type="submit">Add list</button>
+        </form>
+        <ul id="lists-ul" class="plain-list"></ul>
+
+        <div id="list-detail" class="card hidden">
+          <h3 id="list-detail-title"></h3>
+          <span id="list-finished-badge" class="badge hidden">Finished</span>
+          <form id="add-item-form" class="inline-form">
+            <input type="text" id="new-item-name" placeholder="Item name" required />
+            <input type="text" id="new-item-amount" placeholder="Amount" />
+            <input type="text" id="new-item-comment" placeholder="Comment" />
+            <button type="submit">Add item</button>
+          </form>
+          <ul id="items-ul" class="plain-list"></ul>
+        </div>
+      </div>
+
+      <div class="column members-column">
+        <h2>Household</h2>
+        <div id="join-code-box" class="card hidden">
+          <strong>Join code:</strong> <code id="join-code-value"></code>
+          <button type="button" id="btn-regenerate-code">Regenerate</button>
+        </div>
+        <ul id="members-ul" class="plain-list"></ul>
+        <button type="button" id="btn-leave-household">Leave this household</button>
+        <button type="button" id="btn-delete-household" class="danger hidden">Delete household</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

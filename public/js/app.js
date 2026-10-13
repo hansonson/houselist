@@ -129,6 +129,7 @@ async function loadLists() {
   clearChildren(el.listsUl);
   for (const list of data.lists) {
     const li = document.createElement('li');
+    li.classList.toggle('finished', list.finished);
 
     const link = document.createElement('button');
     link.type = 'button';

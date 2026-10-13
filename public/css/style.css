@@ -205,6 +205,11 @@ button:hover {
   font-weight: 600;
 }
 
+.plain-list li.finished button.list-open {
+  background: #2e9150;
+  color: white;
+}
+
 .badge {
   display: inline-block;
   background: #2e9150;
@@ -212,6 +217,7 @@ button:hover {
   padding: 0.15rem 0.6rem;
   border-radius: 999px;
   font-size: 0.85rem;
+  margin: 0.4rem 0 1rem;
 }
 
 .columns {

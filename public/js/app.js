@@ -248,6 +248,7 @@ document.getElementById('household-select').addEventListener('change', async (e)
 
 document.getElementById('btn-new-household').addEventListener('click', () => {
   el.noHousehold.classList.remove('hidden');
+  el.householdView.classList.add('hidden');
 });
 
 document.getElementById('create-household-form').addEventListener('submit', async (e) => {

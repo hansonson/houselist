@@ -130,13 +130,11 @@ async function loadLists() {
   for (const list of data.lists) {
     const li = document.createElement('li');
 
-    const link = document.createElement('a');
-    link.href = '#';
+    const link = document.createElement('button');
+    link.type = 'button';
+    link.className = 'list-open';
     link.textContent = `${list.title} (${list.itemCount} item${list.itemCount === 1 ? '' : 's'})${list.finished ? ' — finished' : ''}`;
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      selectList(list.id);
-    });
+    link.addEventListener('click', () => selectList(list.id));
     li.appendChild(link);
 
     const deleteBtn = document.createElement('button');

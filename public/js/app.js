@@ -58,6 +58,7 @@ async function loadHouseholds() {
 
   if (households.length === 0) {
     activeHouseholdId = null;
+    el.householdSelect.classList.add('hidden');
     el.noHousehold.classList.remove('hidden');
     el.householdView.classList.add('hidden');
     return;
@@ -69,6 +70,7 @@ async function loadHouseholds() {
   el.householdSelect.value = String(activeHouseholdId);
   localStorage.setItem('houselist.activeHouseholdId', String(activeHouseholdId));
 
+  el.householdSelect.classList.remove('hidden');
   el.noHousehold.classList.add('hidden');
   el.householdView.classList.remove('hidden');
   await Promise.all([loadMembers(), loadLists(), loadJoinCode()]);

@@ -29,6 +29,19 @@ function showError(message) {
   el.globalError.textContent = message || '';
 }
 
+// Disables the form's submit button while `action` is in flight, so a fast
+// double-click/tap (more likely over a slow connection) can't fire the
+// request twice before the first response comes back.
+async function withSubmitGuard(form, action) {
+  const submitBtn = form.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  try {
+    await action();
+  } finally {
+    submitBtn.disabled = false;
+  }
+}
+
 function clearChildren(node) {
   while (node.firstChild) node.removeChild(node.firstChild);
 }
@@ -263,63 +276,71 @@ el.cancelNewHouseholdBtn.addEventListener('click', async () => {
 document.getElementById('create-household-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   showError('');
-  try {
-    const nameInput = document.getElementById('new-household-name');
-    const data = await api('POST', '/api/households', { name: nameInput.value });
-    nameInput.value = '';
-    activeHouseholdId = data.household.id;
-    await loadHouseholds();
-  } catch (err) {
-    showError(err.message);
-  }
+  await withSubmitGuard(e.target, async () => {
+    try {
+      const nameInput = document.getElementById('new-household-name');
+      const data = await api('POST', '/api/households', { name: nameInput.value });
+      nameInput.value = '';
+      activeHouseholdId = data.household.id;
+      await loadHouseholds();
+    } catch (err) {
+      showError(err.message);
+    }
+  });
 });
 
 document.getElementById('join-household-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   showError('');
-  try {
-    const codeInput = document.getElementById('join-code-input');
-    const data = await api('POST', '/api/households/join', { code: codeInput.value });
-    codeInput.value = '';
-    activeHouseholdId = data.household.id;
-    await loadHouseholds();
-  } catch (err) {
-    showError(err.message);
-  }
+  await withSubmitGuard(e.target, async () => {
+    try {
+      const codeInput = document.getElementById('join-code-input');
+      const data = await api('POST', '/api/households/join', { code: codeInput.value });
+      codeInput.value = '';
+      activeHouseholdId = data.household.id;
+      await loadHouseholds();
+    } catch (err) {
+      showError(err.message);
+    }
+  });
 });
 
 document.getElementById('create-list-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   showError('');
-  try {
-    const titleInput = document.getElementById('new-list-title');
-    await api('POST', `/api/households/${activeHouseholdId}/lists`, { title: titleInput.value });
-    titleInput.value = '';
-    await loadLists();
-  } catch (err) {
-    showError(err.message);
-  }
+  await withSubmitGuard(e.target, async () => {
+    try {
+      const titleInput = document.getElementById('new-list-title');
+      await api('POST', `/api/households/${activeHouseholdId}/lists`, { title: titleInput.value });
+      titleInput.value = '';
+      await loadLists();
+    } catch (err) {
+      showError(err.message);
+    }
+  });
 });
 
 document.getElementById('add-item-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   showError('');
-  try {
-    const nameInput = document.getElementById('new-item-name');
-    const amountInput = document.getElementById('new-item-amount');
-    const commentInput = document.getElementById('new-item-comment');
-    await api('POST', `/api/households/${activeHouseholdId}/lists/${activeListId}/items`, {
-      name: nameInput.value,
-      amount: amountInput.value,
-      comment: commentInput.value,
-    });
-    nameInput.value = '';
-    amountInput.value = '';
-    commentInput.value = '';
-    await Promise.all([selectList(activeListId), loadLists()]);
-  } catch (err) {
-    showError(err.message);
-  }
+  await withSubmitGuard(e.target, async () => {
+    try {
+      const nameInput = document.getElementById('new-item-name');
+      const amountInput = document.getElementById('new-item-amount');
+      const commentInput = document.getElementById('new-item-comment');
+      await api('POST', `/api/households/${activeHouseholdId}/lists/${activeListId}/items`, {
+        name: nameInput.value,
+        amount: amountInput.value,
+        comment: commentInput.value,
+      });
+      nameInput.value = '';
+      amountInput.value = '';
+      commentInput.value = '';
+      await Promise.all([selectList(activeListId), loadLists()]);
+    } catch (err) {
+      showError(err.message);
+    }
+  });
 });
 
 document.getElementById('btn-regenerate-code').addEventListener('click', async () => {

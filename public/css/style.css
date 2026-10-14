@@ -153,6 +153,11 @@ button:hover {
   flex: 1;
 }
 
+#btn-cancel-new-household {
+  background: #e4ebf0;
+  color: #333;
+}
+
 .inline-form {
   display: flex;
   flex-wrap: wrap;

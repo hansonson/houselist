@@ -22,6 +22,7 @@ const el = {
   joinCodeBox: document.getElementById('join-code-box'),
   joinCodeValue: document.getElementById('join-code-value'),
   deleteHouseholdBtn: document.getElementById('btn-delete-household'),
+  cancelNewHouseholdBtn: document.getElementById('btn-cancel-new-household'),
 };
 
 function showError(message) {
@@ -60,6 +61,7 @@ async function loadHouseholds() {
     activeHouseholdId = null;
     el.householdSelect.classList.add('hidden');
     el.noHousehold.classList.remove('hidden');
+    el.cancelNewHouseholdBtn.classList.add('hidden');
     el.householdView.classList.add('hidden');
     return;
   }
@@ -247,7 +249,15 @@ document.getElementById('household-select').addEventListener('change', async (e)
 
 document.getElementById('btn-new-household').addEventListener('click', () => {
   el.noHousehold.classList.remove('hidden');
+  el.cancelNewHouseholdBtn.classList.toggle('hidden', households.length === 0);
   el.householdView.classList.add('hidden');
+});
+
+el.cancelNewHouseholdBtn.addEventListener('click', async () => {
+  showError('');
+  el.noHousehold.classList.add('hidden');
+  el.householdView.classList.remove('hidden');
+  await Promise.all([loadMembers(), loadLists(), loadJoinCode()]);
 });
 
 document.getElementById('create-household-form').addEventListener('submit', async (e) => {

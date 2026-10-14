@@ -92,6 +92,14 @@ already exercised via leave/removal) — someone who wants to give up their own
 admin status can leave and rejoin via the join code instead. Multi-language
 support (i18n/localization) is also out of scope; the UI is English-only.
 
+Account deletion (a user removing their own account entirely) is not implemented
+either. It would be a reasonable future improvement, but it is more involved than
+it first looks: it would need to walk every household the user belongs to and run
+the same admin-succession logic already used for leave/removal (promote the next
+member or delete the household if none remain), and the `lists.created_by` foreign
+key would need an explicit `ON DELETE` rule so deleting a user who created a list
+doesn't fail outright.
+
 ## Use of AI tools
 
 AI coding assistance (GitHub Copilot) was used during implementation. The concept,

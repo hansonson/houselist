@@ -188,9 +188,10 @@ button:hover {
   flex: 1;
 }
 
-.plain-list li.bought span {
+.plain-list li.bought button.item-toggle {
+  background: #2e9150;
+  color: white;
   text-decoration: line-through;
-  color: #888;
 }
 
 .plain-list li button {
@@ -199,9 +200,13 @@ button:hover {
   color: #333;
 }
 
-.plain-list li button.list-open {
+.plain-list li button.list-open,
+.plain-list li button.item-toggle {
   flex: 1;
   text-align: left;
+}
+
+.plain-list li button.list-open {
   font-weight: 600;
 }
 

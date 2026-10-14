@@ -164,17 +164,14 @@ async function selectList(listId) {
     const li = document.createElement('li');
     li.classList.toggle('bought', item.bought);
 
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.checked = item.bought;
-    checkbox.addEventListener('change', () => toggleBought(item.id, checkbox.checked));
-    li.appendChild(checkbox);
-
-    const label = document.createElement('span');
+    const label = document.createElement('button');
+    label.type = 'button';
+    label.className = 'item-toggle';
     let text = item.name;
     if (item.amount) text += ` — ${item.amount}`;
     if (item.comment) text += ` (${item.comment})`;
     label.textContent = text;
+    label.addEventListener('click', () => toggleBought(item.id, !item.bought));
     li.appendChild(label);
 
     const deleteBtn = document.createElement('button');

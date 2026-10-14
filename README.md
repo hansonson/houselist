@@ -89,7 +89,8 @@ implementation small and well-tested. Demoting a co-admin back to a regular memb
 is also not implemented (promoting a member is; demoting wasn't needed since
 promote alone already allows several admins, and the admin-succession logic is
 already exercised via leave/removal) — someone who wants to give up their own
-admin status can leave and rejoin via the join code instead.
+admin status can leave and rejoin via the join code instead. Multi-language
+support (i18n/localization) is also out of scope; the UI is English-only.
 
 ## Use of AI tools
 

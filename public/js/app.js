@@ -240,6 +240,8 @@ document.getElementById('household-select').addEventListener('change', async (e)
   activeListId = null;
   el.listDetail.classList.add('hidden');
   localStorage.setItem('houselist.activeHouseholdId', String(activeHouseholdId));
+  el.noHousehold.classList.add('hidden');
+  el.householdView.classList.remove('hidden');
   await Promise.all([loadMembers(), loadLists(), loadJoinCode()]);
 });
 

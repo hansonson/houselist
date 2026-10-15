@@ -57,6 +57,11 @@ join-code management, promoting a member to admin, the admin-succession rule whe
 the last admin leaves, a household being deleted once its last member leaves, and
 that a household's data isn't accessible to users outside it.
 
+In addition to the automated suite, the app was manually tested across desktop
+and mobile (Chrome and Firefox), covering the responsive layout, multi-tab/
+multi-user session behavior, form validation and error display, a slow/unreliable
+network connection, and recovering cleanly after a server restart.
+
 ## Project structure
 
 ```

@@ -5,15 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>HouseList</title>
 <link rel="stylesheet" href="css/style.css" />
+<!-- Icon font for buttons; onload flips a flag so CSS can fall back to plain text labels if this fails to load (offline/CDN blocked). -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" onload="document.documentElement.classList.add('fa-ready')" />
 </head>
 <body>
 <header class="app-header">
   <h1>HouseList</h1>
   <div class="header-controls">
     <select id="household-select" aria-label="Active household"></select>
-    <button type="button" id="btn-new-household" aria-label="Add household"><span class="full-label">+ Household</span><span class="short-label">+</span></button>
+    <button type="button" id="btn-new-household" aria-label="Add household">
+      <span class="full-label">+ Household</span>
+      <span class="short-label"><i class="fa-solid fa-plus icon-fa" aria-hidden="true"></i><span class="icon-fallback">+</span></span>
+    </button>
     <span id="current-user"></span>
-    <button type="button" id="btn-logout" aria-label="Log out"><span class="full-label">Log out</span><span class="short-label">🚪</span></button>
+    <button type="button" id="btn-logout" aria-label="Log out">
+      <span class="full-label">Log out</span>
+      <span class="short-label"><i class="fa-solid fa-right-from-bracket icon-fa" aria-hidden="true"></i><span class="icon-fallback">Exit</span></span>
+    </button>
   </div>
 </header>
 
@@ -49,7 +57,7 @@
         <h2>Shopping lists</h2>
         <form id="create-list-form" class="inline-form">
           <input type="text" id="new-list-title" placeholder="New list title" required />
-          <button type="submit">Add list</button>
+          <button type="submit"><i class="fa-solid fa-plus icon-fa" aria-hidden="true"></i>Add list</button>
         </form>
         <ul id="lists-ul" class="plain-list"></ul>
 
@@ -60,7 +68,7 @@
             <input type="text" id="new-item-name" placeholder="Item name" required />
             <input type="text" id="new-item-amount" placeholder="Amount" />
             <input type="text" id="new-item-comment" placeholder="Comment" />
-            <button type="submit">Add item</button>
+            <button type="submit"><i class="fa-solid fa-plus icon-fa" aria-hidden="true"></i>Add item</button>
           </form>
           <ul id="items-ul" class="plain-list"></ul>
         </div>
@@ -74,7 +82,7 @@
         </div>
         <ul id="members-ul" class="plain-list"></ul>
         <button type="button" id="btn-leave-household">Leave this household</button>
-        <button type="button" id="btn-delete-household" class="danger hidden">Delete household</button>
+        <button type="button" id="btn-delete-household" class="danger hidden"><i class="fa-solid fa-trash-can icon-fa" aria-hidden="true"></i>Delete household</button>
       </div>
     </div>
   </section>

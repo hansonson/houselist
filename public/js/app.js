@@ -29,6 +29,19 @@ function showError(message) {
   el.globalError.textContent = message || '';
 }
 
+// Builds a button with a leading icon (Font Awesome, falls back to no icon via CSS) plus a text label.
+function createIconButton(iconClass, label, onClick) {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  const icon = document.createElement('i');
+  icon.className = `fa-solid ${iconClass} icon-fa`;
+  icon.setAttribute('aria-hidden', 'true');
+  btn.appendChild(icon);
+  btn.appendChild(document.createTextNode(label));
+  btn.addEventListener('click', onClick);
+  return btn;
+}
+
 // Disables the form's submit button while `action` is in flight, so a fast
 // double-click/tap (more likely over a slow connection) can't fire the
 // request twice before the first response comes back.
@@ -153,10 +166,7 @@ async function loadLists() {
     link.addEventListener('click', () => selectList(list.id));
     li.appendChild(link);
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.type = 'button';
-    deleteBtn.textContent = 'Delete';
-    deleteBtn.addEventListener('click', () => deleteList(list.id));
+    const deleteBtn = createIconButton('fa-trash-can', 'Delete', () => deleteList(list.id));
     li.appendChild(deleteBtn);
 
     el.listsUl.appendChild(li);
@@ -189,10 +199,7 @@ async function selectList(listId) {
     label.addEventListener('click', () => toggleBought(item.id, !item.bought));
     li.appendChild(label);
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.type = 'button';
-    deleteBtn.textContent = 'Delete';
-    deleteBtn.addEventListener('click', () => deleteItem(item.id));
+    const deleteBtn = createIconButton('fa-trash-can', 'Delete', () => deleteItem(item.id));
     li.appendChild(deleteBtn);
 
     el.itemsUl.appendChild(li);

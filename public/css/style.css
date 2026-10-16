@@ -106,6 +106,23 @@ button:hover {
   color: white;
 }
 
+/* Icons use Font Awesome when it loads; .icon-fallback text shows instead if the CDN is unreachable. */
+.icon-fa {
+  display: none;
+}
+
+html.fa-ready .icon-fa {
+  display: inline-block;
+}
+
+html.fa-ready .icon-fallback {
+  display: none;
+}
+
+button .icon-fa {
+  margin-right: 0.4rem;
+}
+
 /* --- App header --- */
 .app-header {
   background: var(--accent);
@@ -134,9 +151,24 @@ button:hover {
 .header-controls select,
 .header-controls button {
   margin-top: 0;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
   background: rgba(255, 255, 255, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.6);
   color: white;
+  cursor: pointer;
+}
+
+.header-controls select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 1.9rem;
+  background-image: linear-gradient(45deg, transparent 50%, white 50%),
+    linear-gradient(135deg, white 50%, transparent 50%);
+  background-position: calc(100% - 17px) 55%, calc(100% - 12px) 55%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
 }
 
 .header-controls select option {
@@ -165,12 +197,20 @@ button:hover {
     display: none;
   }
 
+  .header-controls {
+    width: 100%;
+  }
+
   .header-controls .full-label {
     display: none;
   }
 
   .header-controls .short-label {
     display: inline;
+  }
+
+  #btn-logout {
+    margin-left: auto;
   }
 }
 

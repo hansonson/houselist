@@ -186,7 +186,7 @@ html.fa-ready button .icon-fa {
 
 #current-user {
   color: rgba(255, 255, 255, 0.85);
-  font-style: italic;
+  font-weight: bold;
 }
 
 .header-controls .short-label {

@@ -123,6 +123,11 @@ button .icon-fa {
   margin-right: 0.4rem;
 }
 
+/* Once the icon is showing, drop its trailing margin where the fallback text is hidden so it sits centered. */
+html.fa-ready button .icon-fa {
+  margin-right: 0;
+}
+
 /* --- App header --- */
 .app-header {
   background: var(--accent);

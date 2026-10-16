@@ -29,15 +29,20 @@ function showError(message) {
   el.globalError.textContent = message || '';
 }
 
-// Builds a button with a leading icon (Font Awesome, falls back to no icon via CSS) plus a text label.
-function createIconButton(iconClass, label, onClick) {
+// Builds a button with a leading icon (Font Awesome); the text label is an
+// accessible/fallback label only, shown visually just when the icon can't load.
+function createIconButton(iconClass, label, ariaLabel, onClick) {
   const btn = document.createElement('button');
   btn.type = 'button';
+  btn.setAttribute('aria-label', ariaLabel);
   const icon = document.createElement('i');
   icon.className = `fa-solid ${iconClass} icon-fa`;
   icon.setAttribute('aria-hidden', 'true');
   btn.appendChild(icon);
-  btn.appendChild(document.createTextNode(label));
+  const fallbackLabel = document.createElement('span');
+  fallbackLabel.className = 'icon-fallback';
+  fallbackLabel.textContent = label;
+  btn.appendChild(fallbackLabel);
   btn.addEventListener('click', onClick);
   return btn;
 }
@@ -166,7 +171,7 @@ async function loadLists() {
     link.addEventListener('click', () => selectList(list.id));
     li.appendChild(link);
 
-    const deleteBtn = createIconButton('fa-trash-can', 'Delete', () => deleteList(list.id));
+    const deleteBtn = createIconButton('fa-trash-can', 'Delete', 'Delete list', () => deleteList(list.id));
     li.appendChild(deleteBtn);
 
     el.listsUl.appendChild(li);
@@ -199,7 +204,7 @@ async function selectList(listId) {
     label.addEventListener('click', () => toggleBought(item.id, !item.bought));
     li.appendChild(label);
 
-    const deleteBtn = createIconButton('fa-trash-can', 'Delete', () => deleteItem(item.id));
+    const deleteBtn = createIconButton('fa-trash-can', 'Delete', 'Delete item', () => deleteItem(item.id));
     li.appendChild(deleteBtn);
 
     el.itemsUl.appendChild(li);

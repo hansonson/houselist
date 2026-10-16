@@ -57,7 +57,7 @@
         <h2>Shopping lists</h2>
         <form id="create-list-form" class="inline-form">
           <input type="text" id="new-list-title" placeholder="New list title" required />
-          <button type="submit"><i class="fa-solid fa-plus icon-fa" aria-hidden="true"></i>Add list</button>
+          <button type="submit" aria-label="Add list"><i class="fa-solid fa-plus icon-fa" aria-hidden="true"></i><span class="icon-fallback">Add list</span></button>
         </form>
         <ul id="lists-ul" class="plain-list"></ul>
 
@@ -68,7 +68,7 @@
             <input type="text" id="new-item-name" placeholder="Item name" required />
             <input type="text" id="new-item-amount" placeholder="Amount" />
             <input type="text" id="new-item-comment" placeholder="Comment" />
-            <button type="submit"><i class="fa-solid fa-plus icon-fa" aria-hidden="true"></i>Add item</button>
+            <button type="submit" aria-label="Add item"><i class="fa-solid fa-plus icon-fa" aria-hidden="true"></i><span class="icon-fallback">Add item</span></button>
           </form>
           <ul id="items-ul" class="plain-list"></ul>
         </div>
@@ -82,7 +82,7 @@
         </div>
         <ul id="members-ul" class="plain-list"></ul>
         <button type="button" id="btn-leave-household">Leave this household</button>
-        <button type="button" id="btn-delete-household" class="danger hidden"><i class="fa-solid fa-trash-can icon-fa" aria-hidden="true"></i>Delete household</button>
+        <button type="button" id="btn-delete-household" class="danger hidden" aria-label="Delete household"><i class="fa-solid fa-trash-can icon-fa" aria-hidden="true"></i><span class="icon-fallback">Delete household</span></button>
       </div>
     </div>
   </section>

@@ -95,7 +95,11 @@ is also not implemented (promoting a member is; demoting wasn't needed since
 promote alone already allows several admins, and the admin-succession logic is
 already exercised via leave/removal) — someone who wants to give up their own
 admin status can leave and rejoin via the join code instead. Multi-language
-support (i18n/localization) is also out of scope; the UI is English-only.
+support (i18n/localization) is also out of scope; the UI is English-only. The
+responsive layout is designed and tested for **portrait** phone orientation
+(plus desktop/tablet widths); landscape phone orientation isn't specifically
+optimized, since a shopping-list app used on a phone is overwhelmingly a
+portrait use case.
 
 Account deletion (a user removing their own account entirely) is not implemented
 either. It would be a reasonable future improvement, but it is more involved than

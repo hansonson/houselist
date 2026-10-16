@@ -285,9 +285,27 @@ button:hover {
   gap: 1.5rem;
 }
 
+.mobile-view-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* On phones, show one column at a time (toggled by the tabs above) instead of
+   stacking both and forcing a lot of scrolling. */
+@media (max-width: 759px) {
+  .column.mobile-hidden {
+    display: none;
+  }
+}
+
 /* Responsive breakpoint: side-by-side columns once there's enough width,
    e.g. desktop/tablet; single column (above) covers phones. */
 @media (min-width: 760px) {
+  .mobile-view-tabs {
+    display: none;
+  }
+
   .side-by-side {
     flex-direction: row;
   }

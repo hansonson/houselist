@@ -379,4 +379,25 @@ document.getElementById('btn-logout').addEventListener('click', async () => {
   window.location.href = 'index.html';
 });
 
+// Mobile-only tab switcher: shows one column at a time instead of stacking both
+// (desktop hides these tabs via CSS and always shows both columns side by side).
+const tabViewLists = document.getElementById('tab-view-lists');
+const tabViewHousehold = document.getElementById('tab-view-household');
+const listsColumn = document.querySelector('.lists-column');
+const membersColumn = document.querySelector('.members-column');
+
+tabViewLists.addEventListener('click', () => {
+  tabViewLists.classList.add('active');
+  tabViewHousehold.classList.remove('active');
+  listsColumn.classList.remove('mobile-hidden');
+  membersColumn.classList.add('mobile-hidden');
+});
+
+tabViewHousehold.addEventListener('click', () => {
+  tabViewHousehold.classList.add('active');
+  tabViewLists.classList.remove('active');
+  membersColumn.classList.remove('mobile-hidden');
+  listsColumn.classList.add('mobile-hidden');
+});
+
 init();

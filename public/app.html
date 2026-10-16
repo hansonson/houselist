@@ -40,6 +40,10 @@
   </section>
 
   <section id="household-view" class="hidden">
+    <div class="mobile-view-tabs">
+      <button type="button" id="tab-view-lists" class="tab active">Lists</button>
+      <button type="button" id="tab-view-household" class="tab">Household</button>
+    </div>
     <div class="columns">
       <div class="column lists-column">
         <h2>Shopping lists</h2>
@@ -74,7 +78,7 @@
         </div>
       </div>
 
-      <div class="column members-column">
+      <div class="column members-column mobile-hidden">
         <h2>Household</h2>
         <div id="join-code-box" class="card hidden">
           <strong>Join code:</strong> <code id="join-code-value"></code>

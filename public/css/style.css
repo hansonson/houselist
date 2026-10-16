@@ -134,12 +134,17 @@ button:hover {
 .header-controls select,
 .header-controls button {
   margin-top: 0;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: white;
+}
+
+.header-controls select option {
+  color: #1b1f23;
 }
 
 .header-controls button:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.42);
 }
 
 #current-user {
@@ -149,6 +154,8 @@ button:hover {
 
 .header-controls .short-label {
   display: none;
+  font-size: 1.2rem;
+  line-height: 1;
 }
 
 /* Below this width the header tends to wrap; compact it instead. */
@@ -172,24 +179,6 @@ button:hover {
   max-width: 1000px;
   margin: 0 auto;
   padding: 1rem;
-}
-
-.inline-form .field {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 120px;
-}
-
-.inline-form .field label {
-  margin: 0 0 0.2rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #555;
-}
-
-.inline-form .field input {
-  margin-top: 0;
 }
 
 .side-by-side {

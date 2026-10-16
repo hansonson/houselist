@@ -11,9 +11,9 @@
   <h1>HouseList</h1>
   <div class="header-controls">
     <select id="household-select" aria-label="Active household"></select>
-    <button type="button" id="btn-new-household">+ Household</button>
+    <button type="button" id="btn-new-household" aria-label="Add household"><span class="full-label">+ Household</span><span class="short-label">+</span></button>
     <span id="current-user"></span>
-    <button type="button" id="btn-logout">Log out</button>
+    <button type="button" id="btn-logout" aria-label="Log out"><span class="full-label">Log out</span><span class="short-label">⏻</span></button>
   </div>
 </header>
 
@@ -44,7 +44,10 @@
       <div class="column lists-column">
         <h2>Shopping lists</h2>
         <form id="create-list-form" class="inline-form">
-          <input type="text" id="new-list-title" placeholder="New list title" required />
+          <div class="field">
+            <label for="new-list-title">List title</label>
+            <input type="text" id="new-list-title" placeholder="e.g. Weekly groceries" required />
+          </div>
           <button type="submit">Add list</button>
         </form>
         <ul id="lists-ul" class="plain-list"></ul>
@@ -53,9 +56,18 @@
           <h3 id="list-detail-title"></h3>
           <span id="list-finished-badge" class="badge hidden">Finished</span>
           <form id="add-item-form" class="inline-form">
-            <input type="text" id="new-item-name" placeholder="Item name" required />
-            <input type="text" id="new-item-amount" placeholder="Amount" />
-            <input type="text" id="new-item-comment" placeholder="Comment" />
+            <div class="field">
+              <label for="new-item-name">Item name</label>
+              <input type="text" id="new-item-name" placeholder="e.g. Milk" required />
+            </div>
+            <div class="field">
+              <label for="new-item-amount">Amount</label>
+              <input type="text" id="new-item-amount" placeholder="e.g. 2L" />
+            </div>
+            <div class="field">
+              <label for="new-item-comment">Comment</label>
+              <input type="text" id="new-item-comment" placeholder="optional" />
+            </div>
             <button type="submit">Add item</button>
           </form>
           <ul id="items-ul" class="plain-list"></ul>

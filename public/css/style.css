@@ -267,6 +267,7 @@ html.fa-ready button .icon-fa {
 
 .plain-list li {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 0;

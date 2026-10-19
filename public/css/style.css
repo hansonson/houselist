@@ -210,8 +210,9 @@ html.fa-ready button .icon-fa {
   line-height: 1;
 }
 
-/* Below this width the header tends to wrap; compact it instead. */
-@media (max-width: 480px) {
+/* Match the layout breakpoint below: anywhere the header can't fit full labels next to the title
+   is also where the single-column/tabbed layout already applies, so compact the header there too. */
+@media (max-width: 759px) {
   .app-header h1,
   #current-user {
     display: none;

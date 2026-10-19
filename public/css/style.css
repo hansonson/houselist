@@ -151,6 +151,11 @@ html.fa-ready button .icon-fa {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  /* Same reasoning as the select's own flex-basis below: auto would size this from its
+     children's full un-shrunk content (ignoring their min-width:0) when app-header decides
+     whether it fits next to the h1 title, wrapping it to its own row long before it needs to. */
+  flex: 1 1 0%;
+  min-width: 0;
   gap: 0.5rem;
 }
 

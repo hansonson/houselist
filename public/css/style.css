@@ -334,6 +334,11 @@ html.fa-ready button .icon-fa {
   .column.mobile-hidden {
     display: none;
   }
+
+  /* The active tab already says which column this is; the heading would be redundant. */
+  .column > h2 {
+    display: none;
+  }
 }
 
 /* Responsive breakpoint: side-by-side columns once there's enough width,

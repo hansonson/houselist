@@ -175,10 +175,23 @@ html.fa-ready button .icon-fa {
   background-position: calc(100% - 17px) 55%, calc(100% - 12px) 55%;
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
+  /* Shrink/truncate a long household name instead of pushing other header buttons onto a 2nd row.
+     flex-basis 0 (not auto) is required here: with nowrap text, an auto basis would use the
+     untruncated text's full width to decide wrapping, before shrinking ever gets a chance to apply. */
+  flex: 1 1 0%;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .header-controls select option {
   color: #1b1f23;
+}
+
+.header-controls button,
+#current-user {
+  flex-shrink: 0;
 }
 
 .header-controls button:hover {

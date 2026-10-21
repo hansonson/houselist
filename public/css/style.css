@@ -194,8 +194,7 @@ html.fa-ready button .icon-fa {
   color: #1b1f23;
 }
 
-.header-controls button,
-#current-user {
+.header-controls button {
   flex-shrink: 0;
 }
 
@@ -207,6 +206,15 @@ html.fa-ready button .icon-fa {
   color: rgba(255, 255, 255, 0.85);
   font-weight: bold;
   margin-left: 0.75rem;
+  /* Same shrink/truncate treatment as the household select, for the same reason: a long real
+     name must not force the header onto a 2nd row (flex-basis 0%, not auto - see select above).
+     flex-grow must be >0 (not just flex-shrink) - otherwise this collapses to 0 width instead
+     of sizing to its content, since nothing else claims space on its behalf. */
+  flex: 1 1 0%;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .header-controls .short-label {

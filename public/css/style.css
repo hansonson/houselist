@@ -259,9 +259,10 @@ html.fa-ready button .icon-fa {
   /* flex-wrap partitions items onto lines using their un-shrunk (only max-width-clamped) size,
      so shrinking can't rescue a wrap once the hypothetical sizes don't fit - the cap itself
      has to be small enough for the narrowest supported width (icon-only buttons leave much
-     less room here than the desktop full-label header does). */
+     less room here than the desktop full-label header does). Sized with real margin below
+     ~300px (not just barely fitting at 320px), after a real device test at 307px wrapped. */
   .header-controls select {
-    max-width: 9rem;
+    max-width: 6rem;
   }
 
   .header-controls .full-label {

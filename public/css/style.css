@@ -260,9 +260,13 @@ html.fa-ready button .icon-fa {
      so shrinking can't rescue a wrap once the hypothetical sizes don't fit - the cap itself
      has to be small enough for the narrowest supported width (icon-only buttons leave much
      less room here than the desktop full-label header does). This default covers the bulk of
-     the mobile/tablet range; an even tighter cap kicks in below 340px (see further down). */
+     the mobile/tablet range; an even tighter cap kicks in below 340px (see further down).
+     flex-grow is safe to add here though: it only redistributes space already confirmed to
+     fit on the line, so a short name stretches to use leftover room instead of leaving it
+     empty, with no risk of causing a wrap that wouldn't otherwise happen. */
   .header-controls select {
     max-width: 11rem;
+    flex-grow: 1;
   }
 
   .header-controls .full-label {

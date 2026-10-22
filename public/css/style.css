@@ -184,11 +184,14 @@ html.fa-ready button .icon-fa {
   background-position: calc(100% - 17px) 55%, calc(100% - 12px) 55%;
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
-  /* Shrink/truncate a long household name instead of pushing other header buttons onto a 2nd row.
-     flex-basis 0 (not auto) is required here: with nowrap text, an auto basis would use the
-     untruncated text's full width to decide wrapping, before shrinking ever gets a chance to apply. */
-  flex: 1 1 0%;
+  /* max-width (not flex-grow) sizes this to content, capped - it no longer grows to fill
+     whatever space is left in the row (that made it stretch full-width regardless of the
+     household name's actual length, since it was the only remaining flex-grow element once
+     the username stopped growing). flex-shrink stays on, so a long name still truncates and
+     two long siblings still compress together rather than overflowing on a narrow screen. */
+  flex: 0 1 auto;
   min-width: 0;
+  max-width: 11rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -215,9 +218,9 @@ html.fa-ready button .icon-fa {
      which flex-grow did, leaving the text stuck to the left of an empty gap. max-width still
      clamps the hypothetical size used for app-header's wrap decision, so a long name still
      can't force the header onto a 2nd row. */
-  flex: 0 0 auto;
+  flex: 0 1 auto;
   min-width: 0;
-  max-width: 12rem;
+  max-width: 8rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -227,6 +230,18 @@ html.fa-ready button .icon-fa {
   display: none;
   font-size: 1.2rem;
   line-height: 1;
+}
+
+/* There's more room once the header isn't competing with a narrower full-label desktop width;
+   the 11rem/8rem defaults above have to stay conservative enough for 760-899px specifically. */
+@media (min-width: 900px) {
+  .header-controls select {
+    max-width: 16rem;
+  }
+
+  #current-user {
+    max-width: 12rem;
+  }
 }
 
 /* Match the layout breakpoint below: anywhere the header can't fit full labels next to the title
@@ -239,6 +254,14 @@ html.fa-ready button .icon-fa {
 
   .header-controls {
     width: 100%;
+  }
+
+  /* flex-wrap partitions items onto lines using their un-shrunk (only max-width-clamped) size,
+     so shrinking can't rescue a wrap once the hypothetical sizes don't fit - the cap itself
+     has to be small enough for the narrowest supported width (icon-only buttons leave much
+     less room here than the desktop full-label header does). */
+  .header-controls select {
+    max-width: 9rem;
   }
 
   .header-controls .full-label {

@@ -259,10 +259,10 @@ html.fa-ready button .icon-fa {
   /* flex-wrap partitions items onto lines using their un-shrunk (only max-width-clamped) size,
      so shrinking can't rescue a wrap once the hypothetical sizes don't fit - the cap itself
      has to be small enough for the narrowest supported width (icon-only buttons leave much
-     less room here than the desktop full-label header does). Sized with real margin below
-     ~300px (not just barely fitting at 320px), after a real device test at 307px wrapped. */
+     less room here than the desktop full-label header does). This default covers the bulk of
+     the mobile/tablet range; an even tighter cap kicks in below 340px (see further down). */
   .header-controls select {
-    max-width: 6rem;
+    max-width: 11rem;
   }
 
   .header-controls .full-label {
@@ -275,6 +275,14 @@ html.fa-ready button .icon-fa {
 
   #btn-logout {
     margin-left: auto;
+  }
+}
+
+/* Extra-narrow phones (verified: a real device/DevTools test wrapped the header at 307px with
+   the 11rem default above) need a tighter cap - the icon-only buttons leave much less room. */
+@media (max-width: 340px) {
+  .header-controls select {
+    max-width: 6rem;
   }
 }
 

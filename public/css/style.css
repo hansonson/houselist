@@ -151,6 +151,10 @@ html.fa-ready button .icon-fa {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  /* Pack the group against the right edge: when a child is absent (e.g. the household select
+     while there are 0 households) or short, leftover space collapses to the left of the group
+     instead of appearing as a gap between elements. */
+  justify-content: flex-end;
   /* Same reasoning as the select's own flex-basis below: auto would size this from its
      children's full un-shrunk content (ignoring their min-width:0) when app-header decides
      whether it fits next to the h1 title, wrapping it to its own row long before it needs to. */
@@ -206,12 +210,14 @@ html.fa-ready button .icon-fa {
   color: rgba(255, 255, 255, 0.85);
   font-weight: bold;
   margin-left: 0.75rem;
-  /* Same shrink/truncate treatment as the household select, for the same reason: a long real
-     name must not force the header onto a 2nd row (flex-basis 0%, not auto - see select above).
-     flex-grow must be >0 (not just flex-shrink) - otherwise this collapses to 0 width instead
-     of sizing to its content, since nothing else claims space on its behalf. */
-  flex: 1 1 0%;
+  /* max-width (not flex-grow) truncates a long name: it sizes to content when there's room,
+     without stretching to claim leftover space when a sibling (e.g. the select) is absent -
+     which flex-grow did, leaving the text stuck to the left of an empty gap. max-width still
+     clamps the hypothetical size used for app-header's wrap decision, so a long name still
+     can't force the header onto a 2nd row. */
+  flex: 0 0 auto;
   min-width: 0;
+  max-width: 12rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

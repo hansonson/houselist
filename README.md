@@ -62,27 +62,67 @@ and mobile (Chrome and Firefox), covering the responsive layout, multi-tab/
 multi-user session behavior, form validation and error display, a slow/unreliable
 network connection, and recovering cleanly after a server restart.
 
+## Architecture
+
+The backend is split into layers with one responsibility each. A request passes
+through them top-down, and each layer only calls the layer directly below it:
+
+| Layer | Folder | Responsibility |
+|---|---|---|
+| HTTP | `server/routes/`, `server/middleware/` | Map URLs to handlers, read request data, check login/household membership, send status codes and JSON. No business rules, no SQL. |
+| Service | `server/services/` | Business rules: input validation, password hashing, join codes, who may do what in a household, admin succession, when a list is finished. No `req`/`res`, no SQL. |
+| Repository | `server/repositories/` | All SQL; turns database rows into plain objects. No business rules. |
+| Database | `server/db.js` | SQLite connection and schema (foreign keys with `ON DELETE CASCADE`). |
+
+Services report problems by throwing typed errors from `server/errors.js` (for
+example `NotFoundError`), which know nothing about HTTP.
+`server/middleware/errorHandler.js` is the single place that turns them into
+status codes and JSON error responses.
+
+Example — joining a household (`POST /api/households/join`):
+
+1. `middleware/auth.js` checks that the user is logged in.
+2. `routes/households.js` passes the user id and the entered code to
+   `householdService.join()` and sends the result with status `201`.
+3. `householdService.join()` normalizes the code, rejects an unknown code
+   (`NotFoundError` → 404) or an existing membership (`ConflictError` → 409),
+   and adds the user as a regular member.
+4. `householdRepository` and `membershipRepository` run the actual SQL.
+
 ## Project structure
 
 ```
 server/
-  index.js            Express app setup, session config, route mounting
-  db.js               SQLite schema + connection
+  index.js                Express app setup, session config, route mounting
+  db.js                   SQLite connection + schema
+  errors.js               typed domain errors (no HTTP knowledge)
+  routes/                 HTTP layer: maps requests to services
+    auth.js               register / login / logout / current user
+    households.js         households, members, join code, promote / remove
+    lists.js              lists and items
   middleware/
-    auth.js           requireAuth session guard
-    household.js       requireHouseholdMember/Admin guards + admin-succession logic
-  routes/
-    auth.js            register / login / logout
-    households.js      create/join/delete households, members, join code, promote
-    lists.js            lists and items CRUD
+    auth.js               requireAuth session guard
+    household.js          requireHouseholdMember / requireHouseholdAdmin guards
+    errorHandler.js       maps domain errors to HTTP status codes + JSON
+    asyncHandler.js       forwards errors from async route handlers
+  services/               business logic, no HTTP and no SQL
+    authService.js        registration/login rules, password hashing
+    householdService.js   join codes, membership rules, admin succession
+    listService.js        list/item rules, "finished" status
+  repositories/           data access: all SQL lives here
+    userRepository.js
+    householdRepository.js
+    membershipRepository.js
+    listRepository.js
+    itemRepository.js
   utils/
-    joinCode.js         random join-code generation
+    joinCode.js           random join-code generation
 public/
-  index.html, app.html  the two pages (auth, main app)
+  index.html, app.html    the two pages (auth, main app)
   css/style.css
-  js/                   frontend logic (api.js, login.js, app.js)
+  js/                     frontend logic (api.js, login.js, app.js)
 tests/
-  api.test.js           integration tests against the real HTTP API
+  api.test.js             integration tests against the real HTTP API
 ```
 
 ## Deliberately out of scope

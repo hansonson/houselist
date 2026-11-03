@@ -1,16 +1,16 @@
-const db = require('../db');
+// HTTP guards for household-scoped routes. The membership lookup itself is delegated to the service layer.
+const householdService = require('../services/householdService');
+const { ValidationError, ForbiddenError } = require('../errors');
 
-// Requires req.params.householdId; attaches req.membership if the user belongs to it.
+// Requires req.params.householdId; attaches req.householdId and req.membership if the user belongs to it.
 function requireHouseholdMember(req, res, next) {
   const householdId = Number(req.params.householdId);
   if (!Number.isInteger(householdId)) {
-    return res.status(400).json({ error: 'Invalid household id' });
+    return next(new ValidationError('Invalid household id'));
   }
-  const membership = db
-    .prepare('SELECT * FROM household_members WHERE household_id = ? AND user_id = ?')
-    .get(householdId, req.session.user.id);
+  const membership = householdService.getMembership(householdId, req.session.user.id);
   if (!membership) {
-    return res.status(403).json({ error: 'Not a member of this household' });
+    return next(new ForbiddenError('Not a member of this household'));
   }
   req.householdId = householdId;
   req.membership = membership;
@@ -19,33 +19,10 @@ function requireHouseholdMember(req, res, next) {
 
 // Must run after requireHouseholdMember.
 function requireHouseholdAdmin(req, res, next) {
-  if (!req.membership || !req.membership.is_admin) {
-    return res.status(403).json({ error: 'Admin rights required' });
+  if (!req.membership || !req.membership.isAdmin) {
+    return next(new ForbiddenError('Admin rights required'));
   }
   next();
 }
 
-// Invariant: a household with >=1 member always has >=1 admin. Call this after deleting
-// a household_members row (leave or remove) in case the departing member was the last admin.
-function ensureHouseholdHasAdmin(householdId) {
-  const remaining = db
-    .prepare('SELECT * FROM household_members WHERE household_id = ? ORDER BY joined_at ASC')
-    .all(householdId);
-
-  if (remaining.length === 0) {
-    // No members left at all -> cascades to lists/items too.
-    db.prepare('DELETE FROM households WHERE id = ?').run(householdId);
-    return { deleted: true };
-  }
-
-  const hasAdmin = remaining.some((m) => m.is_admin);
-  if (!hasAdmin) {
-    const successor = remaining[0]; // longest-tenured remaining member
-    db.prepare('UPDATE household_members SET is_admin = 1 WHERE id = ?').run(successor.id);
-    return { promotedUserId: successor.user_id };
-  }
-
-  return {};
-}
-
-module.exports = { requireHouseholdMember, requireHouseholdAdmin, ensureHouseholdHasAdmin };
+module.exports = { requireHouseholdMember, requireHouseholdAdmin };

@@ -1,6 +1,6 @@
 // Main authenticated app: household switching, membership management, lists and items.
 // DOM-building helpers always use textContent for user-supplied strings (never innerHTML),
-// per the project's XSS-prevention decision in the status file.
+// so user input is never interpreted as HTML (XSS prevention).
 
 let currentUser = null;
 let households = [];

@@ -3,6 +3,7 @@ const express = require('express');
 const session = require('express-session');
 
 const { requireAuth } = require('./middleware/auth');
+const { errorHandler } = require('./middleware/errorHandler');
 const authRoutes = require('./routes/auth');
 const householdRoutes = require('./routes/households');
 const { listsRouter, itemsRouter } = require('./routes/lists');
@@ -27,16 +28,7 @@ app.use('/api/households/:householdId/items', requireAuth, itemsRouter);
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-// Centralized error handler: keeps API responses as JSON instead of Express's default
-// HTML error page, and avoids leaking stack traces to the client.
-// eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
-  if (err.type === 'entity.parse.failed') {
-    return res.status(400).json({ error: 'Invalid JSON in request body' });
-  }
-  console.error('Unexpected error:', err);
-  res.status(500).json({ error: 'Something went wrong' });
-});
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 
